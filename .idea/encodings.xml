@@ -2,6 +2,13 @@
 <project version="4">
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/src/main/java/einstein/MainApplication.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/einstein/controller/MainController.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/einstein/models/GerenciadorRecursos.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/einstein/models/ProcessThread.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/einstein/models/Recurso.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/einstein/models/RecursoAlocado.java" charset="windows-1252" />
+    <file url="file://$PROJECT_DIR$/src/main/java/einstein/os/OperatingSystemMonitor.java" charset="windows-1252" />
     <file url="file://$PROJECT_DIR$/src/main/resources" charset="UTF-8" />
   </component>
 </project>

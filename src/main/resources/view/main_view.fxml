@@ -1,26 +1,104 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<VBox spacing="10" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="einstein.controller.MainController">
-    <HBox spacing="10">
-        <TextField fx:id="resourceNameField" promptText="Nome do Recurso"/>
-        <TextField fx:id="resourceIdField" promptText="ID"/>
-        <TextField fx:id="resourceCountField" promptText="Qtd"/>
-        <Button text="Adicionar Recurso" onAction="#addResource"/>
+
+<VBox alignment="TOP_CENTER" spacing="15.0" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="einstein.controller.MainController">
+    <padding>
+        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+    </padding>
+
+    <Label text="Simulador de Detecção de Deadlock" style="-fx-font-weight: bold; -fx-font-size: 24px; -fx-text-fill: #2c3e50;"/>
+    <Separator prefWidth="200.0"/>
+
+    <HBox alignment="TOP_CENTER" spacing="20.0">
+        <TitledPane text="Configurar Recursos" collapsible="false">
+            <VBox spacing="10.0">
+                <padding>
+                    <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+                </padding>
+                <Label fx:id="resourceLimitMessage" text="Máximo de 10 tipos de recursos!" style="-fx-text-fill: red;" visible="false"/>
+                <GridPane hgap="10.0" vgap="10.0">
+                    <Label text="Nome do Recurso:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="resourceNameInput" prefWidth="150.0" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="ID do Recurso (0-9):" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="resourceIdInput" prefWidth="50.0" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Total de Instâncias:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="resourceInstanceCountInput" prefWidth="50.0" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                </GridPane>
+                <Button onAction="#handleAddResource" text="Adicionar Recurso" maxWidth="Infinity" style="-fx-background-color: #27ae60; -fx-text-fill: white;"/>
+            </VBox>
+        </TitledPane>
+
+        <Separator orientation="VERTICAL"/>
+
+        <TitledPane text="Gerenciar Processos" collapsible="false">
+            <VBox spacing="10.0">
+                <padding>
+                    <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+                </padding>
+                <GridPane hgap="10.0" vgap="10.0">
+                    <Label text="ID do Processo (1-10):" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                    <TextField fx:id="processIdInput" prefWidth="50.0" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+                    <Label text="Intervalo de Requisição (s):" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                    <TextField fx:id="requestIntervalInput" prefWidth="50.0" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+                    <Label text="Intervalo de Utilização (s):" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+                    <TextField fx:id="usageIntervalInput" prefWidth="50.0" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+                </GridPane>
+                <Button onAction="#handleCreateProcess" text="Criar Processo" maxWidth="Infinity" style="-fx-background-color: #3498db; -fx-text-fill: white;"/>
+
+                <Separator/>
+
+                <HBox alignment="CENTER" spacing="10.0">
+                    <Label text="ID do Processo a Parar:"/>
+                    <TextField fx:id="processIdToDeleteInput" prefWidth="50.0"/>
+                    <Button onAction="#handleEliminateProcess" text="Parar Processo" style="-fx-background-color: #e74c3c; -fx-text-fill: white;"/>
+                </HBox>
+            </VBox>
+        </TitledPane>
+
+        <Separator orientation="VERTICAL"/>
+
+        <TitledPane text="Detector de Deadlock" collapsible="false">
+            <VBox spacing="10.0">
+                <padding>
+                    <Insets top="10.0" right="10.0" bottom="10.0" left="10.0"/>
+                </padding>
+                <Label text="Intervalo de Detecção (s):"/>
+                <TextField fx:id="detectionIntervalInput" prefWidth="70.0"/>
+                <Button onAction="#handleStartDetector" text="Iniciar Detector" maxWidth="Infinity" style="-fx-background-color: #f39c12; -fx-text-fill: white;"/>
+                <Separator/>
+                <Label fx:id="deadlockProcessesLabel" text="Processos em Deadlock: Nenhum" style="-fx-font-weight: bold; -fx-text-fill: #c0392b;"/>
+            </VBox>
+        </TitledPane>
     </HBox>
 
-    <HBox spacing="10">
-        <TextField fx:id="processIdField" promptText="ID Processo"/>
-        <TextField fx:id="tsField" promptText="ΔTs (s)"/>
-        <TextField fx:id="tuField" promptText="ΔTu (s)"/>
-        <Button text="Criar Processo" onAction="#createProcess"/>
-    </HBox>
+    <Separator prefWidth="200.0"/>
 
-    <HBox spacing="10">
-        <TextField fx:id="intervalField" promptText="Δt (s) Detector"/>
-        <Button text="Iniciar Detector" onAction="#startDetector"/>
-    </HBox>
+    <HBox alignment="TOP_LEFT" spacing="20.0" VBox.vgrow="ALWAYS">
+        <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+            <TitledPane text="Status Atual dos Recursos" collapsible="false">
+                <TextArea fx:id="resourcesStatusArea" editable="false" prefHeight="200.0" prefWidth="300.0"/>
+            </TitledPane>
+            <TitledPane text="Status dos Processos" collapsible="false">
+                <TextArea fx:id="processesStatusArea" editable="false" prefHeight="200.0" prefWidth="300.0"/>
+            </TitledPane>
+        </VBox>
 
-    <TextArea fx:id="logArea" prefHeight="300"/>
+        <VBox spacing="10.0" HBox.hgrow="ALWAYS">
+            <TitledPane text="Matriz de Alocação e Requisição" collapsible="false">
+                <TextArea fx:id="allocationRequestStatusArea" editable="false" prefHeight="420.0" prefWidth="350.0"/>
+            </TitledPane>
+        </VBox>
+
+        <TitledPane text="Log do Sistema" collapsible="false" HBox.hgrow="ALWAYS">
+            <TextArea fx:id="logArea" editable="false" prefHeight="650.0" prefWidth="450.0"/>
+        </TitledPane>
+    </HBox>
 </VBox>
-
